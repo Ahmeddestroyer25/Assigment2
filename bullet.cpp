@@ -3,18 +3,23 @@
 #include <QTimer>
 #include <QList>
 #include "enemy.h"
+#include "player.h"
+class Player;
 
-Bullet::Bullet() : QObject(), QGraphicsPixmapItem()
+Bullet::Bullet(Player *player) : QObject(), QGraphicsPixmapItem()
 {
     // Load bullet image
-    setPixmap(QPixmap(":/images/laser.png"));
+    setPixmap(QPixmap(":/images/bullet.png"));
 
     // Set bullet size
-    setScale(0.1);
+    setScale(0.3);
     // Generate the Bullets automatically
     QTimer *timer = new QTimer();
     connect(timer, SIGNAL(timeout()), this, SLOT(move()));
     timer->start(50);
+
+    // Store reference to the player
+    this->player = player;
 }
 
 void Bullet::move()
@@ -28,6 +33,8 @@ void Bullet::move()
             scene()->removeItem(colliding_items[i]);
             scene()->removeItem(this);
             delete colliding_items[i];
+            // Increase score via player objec
+            player->increase();
             delete this;
             return;
         }
@@ -37,7 +44,6 @@ void Bullet::move()
     setPos(x(), y() - 10);
 
     // Remove bullet if it goes out of scene
-
     if (pos().y() + pixmap().height() < 0)
     {
         scene()->removeItem(this);

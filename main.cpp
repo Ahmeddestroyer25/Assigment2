@@ -7,6 +7,7 @@
 #include<QGraphicsPixmapItem>
 #include "player.h"
 
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -32,6 +33,8 @@ int main(int argc, char *argv[])
 
     // Assign scene to the view
     view->setScene(scene);
+    view->setBackgroundBrush(Qt::black);
+
     view->show();
 
     // Create the Enemies automatically
@@ -39,13 +42,7 @@ int main(int argc, char *argv[])
     QObject::connect(timer, SIGNAL(timeout()), player, SLOT(createEnemy()));
     timer->start(2000);
 
-    // Bonus: Score Display
-    QGraphicsTextItem *scoreText = new QGraphicsTextItem;
-    scoreText->setFont(QFont("times", 16));
-    scoreText->setDefaultTextColor(Qt::black);
-    scoreText->setPlainText("Your Score: " + QString::number(0));
-    scoreText->setPos(600, 10);
-    scene->addItem(scoreText);
+
 
     return a.exec();
 }

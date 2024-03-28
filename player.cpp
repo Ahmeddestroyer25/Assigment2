@@ -1,4 +1,3 @@
-// In player.cpp
 #include "player.h"
 #include <QKeyEvent>
 #include "bullet.h"
@@ -40,8 +39,8 @@ void Player::keyPressEvent(QKeyEvent *event)
     }
     else if(event->key()== Qt::Key_Space)
     {
-        Bullet * bullet = new Bullet();
-        bullet->setPos(x()+30,y());
+        Bullet * bullet = new Bullet(this);
+        bullet->setPos(x()+104,y());
         scene()->addItem(bullet);
     }
 }
@@ -54,11 +53,22 @@ void Player::decrease() {
 
     // Update health display
     QGraphicsTextItem *healthText = new QGraphicsTextItem;
+    /*scene()->addItem(healthText);
+    healthText->hide();
+    healthText->setFont(QFont("times", 16));
+    healthText->setDefaultTextColor(Qt::red);
+    healthText->setPlainText("Health: " + QString::number(health));
+    healthText->setPos(10, 10);*/
+    if (healthText) {
+        delete healthText;
+    }
+    healthText = new QGraphicsTextItem;
+    scene()->addItem(healthText);
     healthText->setFont(QFont("times", 16));
     healthText->setDefaultTextColor(Qt::red);
     healthText->setPlainText("Health: " + QString::number(health));
     healthText->setPos(10, 10);
-    scene()->addItem(healthText);
+
 }
 
 void Player::increase() {
@@ -66,11 +76,12 @@ void Player::increase() {
 
     // Update score display
     QGraphicsTextItem *scoreText = new QGraphicsTextItem;
-    scoreText->setFont(QFont("times", 16));
-    scoreText->setDefaultTextColor(Qt::blue);
-    scoreText->setPlainText("Score: " + QString::number(score));
-    scoreText->setPos(100, 400);
     scene()->addItem(scoreText);
+    scoreText->setFont(QFont("times", 16));
+    scoreText->setDefaultTextColor(Qt::red);
+    scoreText->setPlainText("Score: " + QString::number(score));
+    scoreText->setPos(600, 10);
+
 }
 
 void Player::gameOver() {
