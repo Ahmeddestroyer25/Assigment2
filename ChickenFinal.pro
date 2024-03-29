@@ -13,18 +13,15 @@ CONFIG += c++17
 SOURCES += \
     bullet.cpp \
     enemy.cpp \
-    gameover.cpp \
     main.cpp \
     player.cpp
 
 HEADERS += \
     bullet.h \
     enemy.h \
-    gameover.h \
     player.h
 
-FORMS += \
-    gameover.ui
+FORMS +=
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
